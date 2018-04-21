@@ -35,17 +35,16 @@ int main(void){
         if( isTag == false && gotChar == '<' ) {
             isTag = true;
             continue;
-		}
-		else if (isTag == true && gotChar == '>') {
-			isTag = false;
-			continue;
-		} else if ( isTag == false ) {
-			if (gotChar == '\t' || gotChar == ' ') {
-				continue;
-			} else {
-				fputc(gotChar, textFile);
-			}
-        } else{
+        } else if (isTag == true && gotChar == '>') {
+            isTag = false;
+            continue;
+        } else if ( isTag == false ) {
+            if (gotChar == '\t' || gotChar == ' ') {
+                continue;
+            } else {
+                fputc(gotChar, textFile);
+            }
+        } else {
             continue;
         }
     }
