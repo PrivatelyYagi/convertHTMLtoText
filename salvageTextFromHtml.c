@@ -1,3 +1,13 @@
+/*********************
+ *
+ * HTMLからタグ以外のテキストを抽出する
+ * 本文に'<'が含まれるとその一文は認識しない仕様
+ *
+ * 2018/04/22 22:43 file make.  Shinsaku Yagi
+ * 2018/04/22 22:54 fix.        Shinsaku Yagi
+ * ******************/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -32,20 +42,20 @@ int main(void){
     }
 
     while((gotChar = fgetc(htmlFile)) != EOF) {
-        if( isTag == false && gotChar == '<' ) {
-            isTag = true;
-            continue;
-        } else if (isTag == true && gotChar == '>') {
-            isTag = false;
-            continue;
-        } else if ( isTag == false ) {
-            if (gotChar == '\t' || gotChar == ' ') {
-                continue;
+        if (isTag == true) {
+            if(gotChar == '>'){
+                /* end of tag. flug off */
+                isTag = false;
+            }
+        } else {
+            if (gotChar == '<') {
+                /* start of tag. flug on */
+                isTag = true;
+            } else if (gotChar == '\t' || gotChar == ' ') {
+                /* nothing to do. */
             } else {
                 fputc(gotChar, textFile);
             }
-        } else {
-            continue;
         }
     }
     fclose(htmlFile);
