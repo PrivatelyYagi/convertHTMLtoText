@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define FILE_NAME_SIZE 99
-#define BUF_SIZE 512
+#define FILE_NAME_SIZE 100
 
 int main(void){
     FILE *htmlFile;  // from
